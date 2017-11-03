@@ -13,10 +13,15 @@ $client = DynamoDbClient::factory(array(
     'region'  => 'us-west-2',
 	'version' => '2012-08-10'
 ));
+//Do this first - may result in error
 /*
 $client->deleteTable(array(
   'TableName' => 'Songs'
 ));
+*/
+
+//Do this next
+/*
 $client->createTable(array(
   'TableName' => 'Songs',
   'AttributeDefinitions' => array(
@@ -46,7 +51,7 @@ $client->createTable(array(
 ));
 */
 
-/*
+//Once table has been created and propagated, do this:
 $result = $client->putItem(array(
   'TableName' => 'Songs',
   'Item' => array(
@@ -67,9 +72,7 @@ $result = $client->putItem(array(
   )
 ));
 
-*/
 
-/*
 $result = $client->getItem(array(
   'ConsistenRead' => false,
   'TableName' => 'Songs',
@@ -78,7 +81,6 @@ $result = $client->getItem(array(
     'Title' => array('S' => 'Microphone Singer')
   )
 ));
-*/
 
 $iterator = $client->getIterator('Scan', array(
   'TableName' => 'Songs',
@@ -95,6 +97,5 @@ foreach ($iterator as $item) {
   print $item['Album']['S'] . ": " . $item['Title']['S'] . "\n";
 }
 //print $result['Item']['Artist']['S'] . "\n";
-
 
 ?>
